@@ -56,16 +56,16 @@ HARDWARE
   - Amount of communication during or inbetween time-steps.
 
   Any model:
-  - Often times a random cpu-core will be appointed after each step, which randomizes
-    performance for parallel runs and can lead to the wrong conclusions.
   - Boost-frequencies are meaningless when you are trying to utilize every available core. 
-
-  Many models:
-  - I have seen no benefits from SDD on compute-nodes, as shared-storage is used for
-    the model- and work-data.
   - Hyper-threading can lead to large variations in execution-time and must be avoided; even
     when running halve the amount of threads (per virtual core) the model-run implementation
     can appoint two threads to the same core.
+
+  Many models:
+  - Often times a random cpu-core will be appointed after each time-step, which randomizes
+    performance for parallel runs and can lead to the wrong conclusions.
+  - I have seen no benefits from SDD on compute-nodes, as shared-storage is used for
+    the model- and work-data.
   - Even though pretty much any HPC calculation fits (amount of cores) on a single node,
     the best HPC-performance nodes have relatively-low (~16) core counts.
 
