@@ -32,6 +32,9 @@ RUNNING YOUR OWN STUFF
   Queue a batch-job:
     root@submit:/share# sbatch -N <number-of-nodes> <script>
 
+  See output from batch-job:
+    root@submit:/share# ls
+
   View compute nodes:
     root@submit:/share# sinfo
 
