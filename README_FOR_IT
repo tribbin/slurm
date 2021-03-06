@@ -45,8 +45,8 @@ MUNGE != PKI
 HARDWARE
 
   Model-runs that (to an IT-specialist) seem familiar and similar can have very different
-  hardware preferences; one model-run is parallel (high-res, partitioned) and another run
-  of the same model is serial (low-res, probability-spectrum).
+  hardware preferences; one model-run is interdependent (high-res, partitioned) and another
+  run of the same model is stand-alone (low-res, probability-spectrum).
 
   Make sure to become familiar with these factors:
   - Dataset size.
