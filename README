@@ -3,7 +3,9 @@ SLURM
   Slurm is used for distributed parallel computing.
   - https://slurm.schedmd.com/overview.html
 
-  This repository is meant as an introduction to containerized use of Slurm.
+  This repository is meant as an entry-level introduction to containerized use of Slurm, aimed at current HPC computing-model specialists.
+  
+  MPI capabilities will be implemented shortly.
 
 
 TESTING IF THIS STUFF WORKS
