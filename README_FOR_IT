@@ -1,0 +1,82 @@
+SLURM
+
+  Slurm is used for distributed parallel computing.
+  - https://slurm.schedmd.com/overview.html
+
+  Port numbers are often defined in slurm.conf.
+  - https://slurm.schedmd.com/network.html
+
+MPI
+
+  MPI is used for HPC (high performance computing) distributed workloads and provides
+  communication between interdependent parallel computation-processes, even on a single
+  compute-node.
+
+  There are several (implementations within) implementations of MPI. I will not provide a
+  list of MPI-implementations and I advise you NOT to rely on your Google-prowess.
+
+  Make sure to check with the model-specialist which implementation is used for
+  EVERY SPECIFIC model-run. Please don't make assumptions like I did...
+
+  For HPC-scientists, complete passwordless SSH access between all nodes is the norm, aswell
+  as TCP-level access to all random ports between all nodes. Adding every node in each others
+  'trusted' zone (in case of firewalld) could have spared me many hours.
+
+  1. Generate SSH keypairs for each host.
+  2. Autherize all nodes to run commands on every other node.
+  3a. Find a way to pre-load ~/.ssh/known_hosts on all nodes, or ...
+  3b. trust your DNS records and network: /etc/ssh/ssh_config: StrictHostKeyChecking=no
+
+  Every compute-model that I've encountered is equally happy when the shared binaries and
+  data are on any type of shared volumes; Docker-volumes, CIFS, NFS... it makes no difference.
+
+
+MUNGE != PKI
+
+  Compute-nodes sometimes use 'munged' to blindly trust any 'munge' client that has the same
+  shared key. Although 'munged' is very strict about the ownership of and access to the keyfile,
+  I would advise against using this software in operational environments.
+
+  Not one single model needs munge, so only use (SSH) PKI.
+
+
+HARDWARE
+
+  Model-runs that (to an IT-specialist) seem familiar and similar can have very different
+  hardware preferences; one model-run is parallel (high-res, partitioned) and another run
+  of the same model is serial (low-res, probability-spectrum).
+
+  Make sure to become familiar with these factors:
+  - Dataset size.
+  - Dataset resolution.
+  - Hindcast- and forecast length.
+  - Timestep resolution.
+  - Amount of communication during or inbetween time-steps.
+
+  Any model:
+  - Often times a random cpu-core will be appointed after each step, which randomizes
+    performance for parallel runs and can lead to the wrong conclusions.
+  - Boost-frequencies are meaningless when you are trying to utilize every available core. 
+
+  Many models:
+  - I have seen no benefits from SDD on compute-nodes, as shared-storage is used for
+    the model- and work-data.
+  - Hyper-threading can lead to large variations in execution-time and must be avoided; even
+    when running halve the amount of threads (per virtual core) the model-run implementation
+    can appoint two threads to the same core.
+  - Even though pretty much any HPC calculation fits (amount of cores) on a single node,
+    the best HPC-performance nodes have relatively-low (~16) core counts.
+
+  Interdependent computation model-runs:
+  - The last-finishing process determines when the next time-step can start, so it's very
+    important to make sure every thread is treated equally on resources.
+  - Model-software often has one control-thread or (single-core) merges intermediate results, so
+    having two spare cores will lead to optimal performance.
+  - Some models greatly benefit from optimized (InfiniBand) interconnects, but those model-runs
+    are less common than you might expect. Be sure to compare performance.
+
+  Stand-alone computation model-runs:
+  - These computations might be stand-alone, but the script will only continue when all
+    computations are completed.
+
+My best advice for you is to work closely with the model-specialist.
