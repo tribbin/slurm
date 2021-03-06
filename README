@@ -14,7 +14,7 @@ TESTING IF THIS STUFF WORKS
   Build and start containers:
     $ docker-compose up -d
 
-  Open interactive shell in submit-container:
+  Open interactive terminal in submit-container:
     $ docker exec -it submit bash
 
   Run test from within submit-container:
@@ -29,11 +29,11 @@ RUNNING YOUR OWN STUFF
   Open interactive shell in submit-container (again):
     $ docker exec -it submit bash
 
-  Run a job:
-    root@submit:/share# srun -N <number-of-nodes> <command>
+  Run a job command:
+    root@submit:/share# srun -N <number-of-nodes> -n <number-of-tasks> <command>
 
-  Queue a batch-job:
-    root@submit:/share# sbatch -N <number-of-nodes> <script>
+  Queue a batch-job script:
+    root@submit:/share# sbatch -N <number-of-nodes> -n <number-of-tasks> <script>
 
   See output from batch-job:
     root@submit:/share# ls
