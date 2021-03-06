@@ -23,17 +23,23 @@ RUNNING YOUR OWN STUFF
   Copy your own work-files to the container:
     $ docker cp <file> submit:/share/<destination>
 
-  Run a job from within submit-container:
+  Open interactive shell in submit-container (again):
+    $ docker exec -it submit bash
+
+  Run a job:
     root@submit:/share# srun -N <number-of-nodes> <command>
 
-  Queue a batch-job from winthin submit-container:
-    root@submit:/share# sbatch -N <number-of-nodes> <command>
+  Queue a batch-job:
+    root@submit:/share# sbatch -N <number-of-nodes> <script>
 
   View compute nodes:
     root@submit:/share# sinfo
 
   View job queue:
     root@submit:/share# squeue
+
+  View variables for scripting parallel workloads:
+    root@submit:/share# srun env
 
   Learn more:
     https://slurm.schedmd.com/quickstart.html
