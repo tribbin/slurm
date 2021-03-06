@@ -1,0 +1,47 @@
+version: "3"
+services:
+  submit:
+    build: .
+    image: slurm
+    hostname: submit
+    container_name: submit
+    volumes:
+      - ${PWD}/slurm.conf:/etc/slurm-llnl/slurm.conf
+      - mungekey:/etc/munge
+      - share:/share
+      - ${PWD}/test.sh:/share/test.sh
+      - ${PWD}/run_test.sh:/share/run_test.sh
+    command: >
+        bash -c "service munge start
+        && slurmctld -D -i"
+  compute0:
+    build: .
+    image: slurm
+    hostname: compute0
+    container_name: compute0
+    volumes:
+      - ${PWD}/slurm.conf:/etc/slurm-llnl/slurm.conf
+      - mungekey:/etc/munge:ro
+      - share:/share
+    command: >
+        bash -c "service munge start
+        && slurmd -D"
+    depends_on:
+      - "submit"
+  compute1:
+    build: .
+    image: slurm
+    hostname: compute1
+    container_name: compute1
+    volumes:
+      - ${PWD}/slurm.conf:/etc/slurm-llnl/slurm.conf
+      - mungekey:/etc/munge:ro
+      - share:/share
+    command: >
+        bash -c "service munge start
+        && slurmd -D"
+    depends_on:
+      - "submit"
+volumes:
+  mungekey:
+  share:
