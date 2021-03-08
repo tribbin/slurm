@@ -30,7 +30,7 @@ MPI
   3b. trust your DNS records and network: /etc/ssh/ssh_config: StrictHostKeyChecking=no
 
   Every compute-model that I've encountered is equally happy when the shared binaries and
-  data are on any type of shared volumes; Docker-volumes, CIFS, NFS... it makes no difference.
+  data are on any type of shared volumes; Docker-volume, CIFS, NFS... it makes no difference.
 
 
 MUNGE != PKI
