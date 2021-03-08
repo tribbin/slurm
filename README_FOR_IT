@@ -58,7 +58,7 @@ HARDWARE
   Any model:
   - Boost-frequencies are meaningless when you are trying to utilize every available core. 
   - Hyper-threading can lead to large variations in execution-time and must be avoided; even
-    when running halve the amount of threads (per virtual core) the model-run implementation
+    when running half the amount of threads (per virtual core) the model-run implementation
     can appoint two threads to the same core.
 
   Many models:
