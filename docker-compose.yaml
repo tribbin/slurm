@@ -37,6 +37,3 @@ services:
         && slurmd -D"
     depends_on:
       - "submit"
-volumes:
-  mungekey:
-  share:
