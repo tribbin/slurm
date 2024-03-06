@@ -1,18 +1,30 @@
-from debian
+from almalinux:8
+
+# Epel repository
+RUN dnf -y install epel-release
+
+RUN dnf config-manager --set-enabled powertools
 
 ENV DEBIAN_FRONTEND noninteractive
-RUN apt-get -y update
+RUN dnf -y update
 
 # Management tools
-RUN apt-get -y install man vim less
+RUN dnf -y install man vim less
 
 # Slurm deps
-RUN apt-get -y install bsd-mailx slurmctld slurmd
+RUN dnf -y install slurm slurm-slurmd slurm-slurmctld
 
 # Toolset
-RUN apt-get -y --no-install-recommends install netcdf-bin cdo
+RUN dnf -y install netcdf
 
 # Python base
-RUN apt-get -y --no-install-recommends install python3-pip
+RUN dnf -y install python3-pip
+
+# Apptainer base
+RUN dnf -y install apptainer
+
+RUN dnf -y install sudo
+
+RUN cd /etc/munge/ && create-munge-key
 
 WORKDIR /share

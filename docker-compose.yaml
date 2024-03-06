@@ -6,13 +6,10 @@ services:
     hostname: submit
     container_name: submit
     volumes:
-      - ${PWD}/slurm.conf:/etc/slurm-llnl/slurm.conf
-      - mungekey:/etc/munge
-      - share:/share
-      - ${PWD}/test.sh:/share/test.sh
-      - ${PWD}/run_test.sh:/share/run_test.sh
+      - ${PWD}/slurm.conf:/etc/slurm/slurm.conf
+      - ${PWD}/share:/share
     command: >
-        bash -c "service munge start
+        bash -c "sudo -u munge /usr/sbin/munged
         && slurmctld -D -i"
   compute0:
     build: .
@@ -20,11 +17,10 @@ services:
     hostname: compute0
     container_name: compute0
     volumes:
-      - ${PWD}/slurm.conf:/etc/slurm-llnl/slurm.conf
-      - mungekey:/etc/munge:ro
-      - share:/share
+      - ${PWD}/slurm.conf:/etc/slurm/slurm.conf
+      - ${PWD}/share:/share
     command: >
-        bash -c "service munge start
+        bash -c "sudo -u munge /usr/sbin/munged
         && slurmd -D"
     depends_on:
       - "submit"
@@ -34,11 +30,10 @@ services:
     hostname: compute1
     container_name: compute1
     volumes:
-      - ${PWD}/slurm.conf:/etc/slurm-llnl/slurm.conf
-      - mungekey:/etc/munge:ro
-      - share:/share
+      - ${PWD}/slurm.conf:/etc/slurm/slurm.conf
+      - ${PWD}/share:/share
     command: >
-        bash -c "service munge start
+        bash -c "sudo -u munge /usr/sbin/munged
         && slurmd -D"
     depends_on:
       - "submit"
